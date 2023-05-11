@@ -1,9 +1,11 @@
 {
     "name": "DataLab Environment",
-    "image": "6214247/data-lab-campus:latest",
     "hostRequirements": {
         "cpus": 4
       },
+    "build": {
+      "dockerfile": "Dockerfile",
+    },
     "settings" : {
         "workbench.colorTheme": "Visual Studio Dark"
       },
