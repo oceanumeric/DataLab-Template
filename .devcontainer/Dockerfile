@@ -1,6 +1,6 @@
-FROM 6214247/data-lab-campus:1.0.0
+FROM 6214247/data-lab:latest
 
-# Install additional packages
-RUN python3 -m pip install setuptools
+RUN echo "Hello World!"
 
+RUN echo "I am building up your code environment now..."
 
