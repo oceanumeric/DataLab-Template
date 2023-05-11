@@ -3,6 +3,7 @@
     "hostRequirements": {
         "cpus": 4
       },
+    "initializeCommand": "docker system prune --all --force",
     "build": {
       "dockerfile": "Dockerfile",
     },
