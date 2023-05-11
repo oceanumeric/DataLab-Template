@@ -1,0 +1,22 @@
+{
+    "name": "DataLab Environment",
+    "hostRequirements": {
+        "cpus": 4
+      },
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "settings" : {
+        "workbench.colorTheme": "Visual Studio Dark"
+      },
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "REditorSupport.r",
+        "GitHub.copilot",
+        "mathematic.vscode-pdf",
+        "hediet.vscode-drawio",
+        "pkief.material-icon-theme",
+        "marp-team.marp-vscode"
+      ]
+}
