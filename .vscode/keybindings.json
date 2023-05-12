@@ -1,0 +1,13 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "alt+cmd+n",
+        "command": "python.execInTerminal-icon"
+    },
+    {
+        "key": "shift+space",
+        "command": "jupyter.execSelectionInteractive",
+        // "command": "jupyter.runFileInteractive",
+        "when": "editorTextFocus && editorLangId == 'r'"
+    }
+]
