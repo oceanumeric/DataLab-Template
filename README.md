@@ -23,5 +23,14 @@ This is a  :fire: __one-click__  :fire: solution to create a workspace with AI f
 
    [![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?style=for-the-badge&logo=github)]
 
-2. Watch this video to learn how to use this template in _5 minutes_:
+2. Setup profile
+
+   - Go to `Settings` -> `Profile` -> `Import profile` 
+   - paste the following link to `Import profile` and click `Import`
+
+   ```bash
+   /workspaces/DataLab-Template/DataLab.code-profile
+   ```
+
+3. Watch this video to learn how to use this template more effectively in _5 minutes_:
 
