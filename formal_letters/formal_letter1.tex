@@ -1,0 +1,136 @@
+%-----------------------------------------------------------------------------%
+
+% Letter class
+\documentclass[a4paper, 11pt]{letter}
+\usepackage[a4paper,top=0.7in, left=1in, right=1in]{geometry}
+% \usepackage{lmodern}  % font:  sans serif Latin Modern
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage{txfonts}  % times font
+\usepackage{microtype} % Improves typography, try to use all the time
+\usepackage{marvosym}  % symbols
+\usepackage{blindtext}  % generate random text
+\usepackage{etoolbox}   
+\usepackage[english,ngerman, main=english]{babel}
+\usepackage{xcolor}  % text color
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage[normalem]{ulem} 
+\fancyhead{}
+\fancyfoot{}
+\lfoot{Page \thepage{}~of~\pageref{LastPage}}
+% align left, you could use \cfoot to make it center  
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+
+%%%----------------place date after the address of receiver---------
+\makeatletter
+% If pagestyle is firstpage, remove old placement of date
+\patchcmd\opening{{\raggedleft\@date\par}}{}{}{}
+% If pagestyle is empty, remove vertical space after addess
+\patchcmd\opening{\fromaddress \\*[2\parskip]}{\fromaddress}{}{}
+% If pagestyle is empty, remove old placement of date
+\patchcmd\opening{\@date \end{tabular}\par}{\end{tabular}\par}{}{}
+% Insert new placement of date
+\patchcmd\opening{{\raggedright \toname \\ \toaddress \par}}{{\raggedright \toname \\ \toaddress \par}{\raggedleft\@date\par}}{}{}
+\makeatother
+%%%----------------place date after the address of receiver---------
+
+% Name of sender
+\name{Fei Wang}
+
+% Signature of sender
+\signature{}
+
+% uncomment the following section if you need address of sender align right
+% \address{\begin{tabular}{r@{}}%
+%     \scriptsize   Room901, Apartment 11-3\\
+%     \scriptsize   Fu Li Dong Fang \\
+%     \scriptsize Dong Yue Da Jie Street \\
+%     \scriptsize   Taian, 271000, Shandong, China \\
+%     \scriptsize Telefon:  (+86) 13625744156 \\  %\Mobilefone symbol
+%     \Letter \ \scriptsize  numerical.ocean@gmail.com
+%     \end{tabular}%  
+%     }
+\address{
+    \scriptsize   Room001 \\
+    \scriptsize   Mainzer Landstraße 323 \\
+    \scriptsize   60326, Frankfurt am Main \\
+    \scriptsize   Phone:  01745379728 \\  %\Mobilefone symbol
+    \Letter \ \scriptsize  numerical.ocean@gmail.com
+}
+
+\date{Frankfurt, 09 September 2021}  % leave it empty
+
+\longindentation=0pt  % set the indentation of closing marks
+
+%-----------------------------------------------------------------------------%
+
+\begin{document}
+
+% Name and address of receiver
+\begin{letter}
+{
+    {\scshape  Ausländerbehörde},\\
+    \small 32.43.3 / 6544139,\\
+    \small Kleyerstraße 86, \\
+    \small 60326 Frankfurt am Main 
+    
+}
+
+
+% subject matter 
+\opening{\normalfont \textbf{Subject: Residence Permit Application}}
+\thispagestyle{fancy}
+% % Opening statement
+% \vspace{0.5cm}
+% To Whom It May Concern, \par
+% \vspace{0.2cm}
+
+% Letter body
+
+Sehr geehrte Damen und Herren, 
+
+ich habe Post vom Auswärtigen Amt wegen meines Antrags auf Aufenthaltsgenehmigung erhalten 
+Antrag erhalten. Gemäß den Anweisungen, die Sie mir geschickt haben, habe ich alle 
+alle wichtigen Dokumente vorbereitet und diesem Schreiben beigefügt. 
+
+Um Ihnen mehr Informationen über mich zu geben, habe ich auch meinen Lebenslauf beigefügt, 
+einige Dokumente, die für die Beantragung des Visums für die Einreise nach Deutschland verwendet werden, 
+und detailliertere Finanzausweise. 
+
+Sollten Sie noch Fragen haben, können Sie mich gerne telefonisch oder per E-Mail kontaktieren. 
+Ich hoffe, dass alle meine Dokumente mit den vom Auswärtigen Amt geforderten übereinstimmen, 
+damit die Aufenthaltsgenehmigung rechtzeitig ausgestellt werden kann. 
+Ich danke Ihnen vielmals.
+
+Mit freundlichen Grüßen
+
+\dashuline{ $ \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \  \ \ \ \ $               }
+\vspace{0.2cm}
+
+Dear Madam or Sir,
+
+I have received a post from the foreign office about my residence permit 
+application. Following the instructions you have sent to me, I have prepared 
+all essential documents and attached after this letter. 
+
+To give you more information about me, I have also put my CV, 
+some documents used for applying for the visa to enter Germany, 
+and more detailed financial statements. 
+
+If you have any questions, please feel free to contact me by phone or email. 
+Hope all my documents match to the required ones by the foreign office, 
+from which the residence permit will be issued in due time. 
+Thank you very much.
+
+
+% Closing statement
+\closing{Kind Regards}
+
+\end{letter}
+\end{document}
+%-----------------------------------------------------------------------------%
