@@ -2,9 +2,19 @@
 {
     // backgound color for editor
     "workbench.colorTheme": "One Dark Pro",
-
     // icon
     "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations": {
+
+        "editor.background": "#1C3029",
+        "activityBar.background": "#202A2F",
+        "sideBar.background": "#202A2F",
+        "titleBar.activeBackground": "#3D3C3D",
+        "tab.activeBackground": "#263238"
+        
+    },
+    // font
+    "editor.fontSize": 14,
     "latex-workshop.latex.outDir": "./pdfile",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.autoClean.run": "onBuilt", //note that the end is t is not d
