@@ -1,7 +1,10 @@
 // vscode settings for codespace
 {
     // backgound color for editor
-    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "One Dark Pro",
+
+    // icon
+    "workbench.iconTheme": "material-icon-theme",
     "latex-workshop.latex.outDir": "./pdfile",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.autoClean.run": "onBuilt", //note that the end is t is not d
