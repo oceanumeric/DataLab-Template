@@ -1,7 +1,7 @@
 # Work Space with AI for futurist
 
 
-This is a __one-click__ solution to create a workspace with AI for futurist. It assumes you have:
+This is a __one-click__  :fire: solution to create a workspace with AI for futurist. It assumes you have: 
 
 - Github account
 - Github CodeSpace enabled (if not, register [here](https://github.com/features/codespaces))
