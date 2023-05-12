@@ -24,6 +24,8 @@ def plot_fansy_figure():
 
 
 if __name__ == "__main__":
+    # inline retina for jupyter
+    # %config InlineBackend.figure_format = 'retina'
     plot_fansy_figure()
     print("Hello World!")
 # %%

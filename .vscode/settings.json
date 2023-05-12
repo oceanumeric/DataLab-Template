@@ -17,7 +17,8 @@
     "editor.rulers": [88],
     // font
     "editor.fontSize": 14,
-    "latex-workshop.latex.outDir": "./pdfile",
+    "latex-workshop.latex.outDir": "%DIR%/temp",
+    "latex-workshop.latex.autoBuild.run": "onSave",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.latex.autoClean.run": "onBuilt", //note that the end is t is not d
     "latex-workshop.latex.clean.fileTypes": [
@@ -39,17 +40,64 @@
     "*.ist",
     "*.fls",
     "*.log",
-    "*.fdb_latexmk",
-        ],
-        "github.copilot.enable": {
-            "*": true,
-            "yaml": false,
-            "plaintext": false,
-            "markdown": true
+    "*.fdb_latexmk"],
+    "latex-workshop.latex.recipes": [
+        {
+          "name": "latexmk ➞ makeFolder ➞ copyPDF",
+          "tools": ["latexmk", "makeFolder", "copyPDF"]
+        }
+      ],
+      "latex-workshop.latex.tools": [
+        {
+          "name": "latexmk",
+          "command": "latexmk",
+          "args": [
+            "-shell-escape",
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "-pdf",
+            "-outdir=%OUTDIR%",
+            "%DOC%"
+          ],
+          "env": {}
         },
-        "markdown.marp.enableHtml": true,
-        "markdown.marp.themes": [
-            "./themes/gradient.css",
-            "./themes/beam.css"
-        ],
+        {
+          "name": "makeFolder",
+          "command": "mkdir",
+          "args": [ 
+              "-p", 
+              "%DIR%/pdfs/"
+          ],
+          "env": {}
+        },
+        {
+          "name": "copyPDF",
+          "command": "cp",
+          "args": [ 
+              "%OUTDIR%/%DOCFILE%.pdf", 
+              "%DIR%/pdfs/"
+          ],
+          "env": {}
+        },
+        // {
+        //   "name": "deletePDF",
+        //   "command": "rm",
+        //   "args": [ 
+        //       "%OUTDIR%/%DOCFILE%.pdf"
+        //   ],
+        //   "env": {}
+        // }
+      ],
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": true
+    },
+    "markdown.marp.enableHtml": true,
+    "markdown.marp.themes": [
+        "./themes/gradient.css",
+        "./themes/beam.css"
+    ],
 }

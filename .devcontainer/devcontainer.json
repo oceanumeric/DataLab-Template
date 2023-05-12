@@ -7,7 +7,58 @@
       "dockerfile": "Dockerfile",
     },
     "settings" : {
-        "workbench.colorTheme": "Visual Studio Dark"
+        // backgound color for editor
+    "workbench.colorTheme": "One Dark Pro",
+    // icon
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.inlineSuggest.enabled": true,
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "workbench.colorCustomizations": {
+        "editor.background": "#1C3029",
+        "activityBar.background": "#202A2F",
+        "sideBar.background": "#202A2F",
+        "titleBar.activeBackground": "#3D3C3D",
+        "tab.activeBackground": "#263238"
+        
+    },
+    "editor.rulers": [88],
+    // font
+    "editor.fontSize": 14,
+    "latex-workshop.latex.outDir": "./pdfile",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.autoClean.run": "onBuilt", //note that the end is t is not d
+    "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.idx",
+    "*.ind",
+    "*.lof",
+    "*.lot",
+    "*.out",
+    "*.toc",
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.ist",
+    "*.fls",
+    "*.log",
+    "*.fdb_latexmk",
+        ],
+        "github.copilot.enable": {
+            "*": true,
+            "yaml": false,
+            "plaintext": false,
+            "markdown": true
+        },
+        "markdown.marp.enableHtml": true,
+        "markdown.marp.themes": [
+            "./themes/gradient.css",
+            "./themes/beam.css"
+        ],
       },
       "extensions": [
         "ms-toolsai.jupyter",
