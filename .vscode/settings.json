@@ -4,7 +4,7 @@
     "workbench.colorTheme": "One Dark Pro",
     // icon
     "workbench.iconTheme": "material-icon-theme",
-    "editor.inlineSuggest.enabled": false,
+    "editor.inlineSuggest.enabled": true,
     "jupyter.interactiveWindow.creationMode": "perFile",
     "workbench.colorCustomizations": {
         "editor.background": "#1C3029",
