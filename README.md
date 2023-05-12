@@ -32,5 +32,9 @@ This is a  :fire: __one-click__  :fire: solution to create a workspace with AI f
    /workspaces/DataLab-Template/DataLab.code-profile
    ```
 
+   Once imported, you should see the following profile:
+
+   ![image-profile](images/profile-screenshot.png)
+
 3. Watch this video to learn how to use this template more effectively in _5 minutes_:
 
