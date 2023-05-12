@@ -3,7 +3,7 @@
 
 This is a __one-click__  :fire: solution to create a workspace with AI for futurist. It assumes you have: 
 
-- Github account
+- Github account :octocat:
 - Github CodeSpace enabled (if not, register [here](https://github.com/features/codespaces))
 - Github Copilot enabled (if not, register [here](https://github.com/features/copilot))
 
@@ -23,4 +23,3 @@ This is a __one-click__  :fire: solution to create a workspace with AI for futur
 
    [![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?style=for-the-badge&logo=github)]
 
-   
