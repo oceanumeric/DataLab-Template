@@ -1,0 +1,273 @@
+\documentclass[12pt]{article}
+
+% add some essential packages, some might not be used
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{natbib}
+\usepackage{authblk}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+\usepackage[a4paper,margin=1in,bottom=1.0in]{geometry}
+\usepackage{url}
+\usepackage{array}
+\usepackage{bbding}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{appendix}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[english, greek]{babel}
+\usepackage{adjustbox}
+%\usepackage{enumitem}
+\usepackage{textgreek}
+\usepackage[most]{tcolorbox}
+
+
+\usepackage{listings}
+\usepackage{wasysym}
+\usepackage{amsthm}
+\usepackage{framed}
+
+\usepackage{rotating} % for the horizontal page table
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage{enumerate}
+\usepackage{bm}
+\usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{tcolorbox} % package for making colorful box 
+
+ \setlength{\parskip}{0.15cm} % change the paragraph spacing 
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$} % set the bullet size as tiny 
+
+% \newcommand*\rot{\rotatebox{90}} % for rotate text  
+
+\usepackage{sectsty} %package for section size 
+
+\sectionfont{\fontsize{14}{12}\selectfont} % Change the section font size
+
+\subsectionfont{\fontsize{13}{12}\selectfont} 
+\subsubsectionfont{\fontsize{12}{12}\selectfont}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}} % new command 
+
+\newenvironment{remark}[2][\textit{Remark:}]{\begin{trivlist}
+\item[\hskip \labelsep { #1}]}{\end{trivlist}}
+
+\theoremstyle{definition}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{proposition}[subsection]{Proposition}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{theorem}[subsection]{Theorem}
+\newtheorem{axiom}[subsubsection]{Axiom}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{example}[subsection]{Example}
+\newtheorem{hypothesis}[subsubsection]{Hypothesis}
+
+\newcommand{\zn}{\mathbb{Z}}
+\newcommand{\cn}{\mathbb{C}}
+\newcommand{\qn}{\mathbb{Q}}
+\newcommand{\rn}{\mathbb{R}}
+\newcommand{\pn}{\mathbb{P}}
+\newcommand{\fn}{\mathbb{F}}
+\newcommand{\nn}{\mathbb{N}}
+\usepackage{pythonhighlight}
+\renewcommand{\arraystretch}{1.2}
+
+\usepackage{courier}
+
+\numberwithin{equation}{section}
+
+\begin{document}
+
+\selectlanguage{english}
+
+
+\title{Neural Networks: Practical Issues}
+\author{Michael}
+\affil{School of Mathematics and Statistics, UCD}
+\affil{School of Economics, University of Nottingham}
+\date{}
+
+\maketitle
+
+\section{Introduction}
+
+
+When we apply our machine learning (ML) or deep learning (DL) models in different problems, we will encounter so many different practical issues, such as choices of activation functions, value of learning rate, etc. Knowing how to do hyper-parameter tuning, regularization and optimization is essential for improving our ML/DL models. According to Andrew Ng, practicing ML/DL models is a process of iteration, in which you have to learn to find the best choices of hyper-parameters by keeping trying different methods. 
+
+In this set of notes, we will discuss the following topics:
+\begin{itemize}
+	\item Model assessment 
+	\item Regulation 
+	\item Optimization
+	\item Hyper-parameters tuning and programming framework
+\end{itemize}
+
+\section{Model Assessment}
+
+The generalization performance of a learning method relates to its prediction capability on independent test data. Assessment of this performance is extremely important in practice, since it guides the choice of learning method or model, and gives us a measure of the quality of the ultimately chosen model. 
+
+To assess our model, we need split our data into three different datasets:
+\begin{itemize}
+	\item Training set
+	\item Validation set
+	\item Test set
+\end{itemize}
+
+When your dataset id not very big, the ratio for those datasets could be: 60/20/20. However, when you have a large dataset (for instance, 1 million), then the ratio for those datasets should be around: 98/1/1. 
+
+Before we continue to discuss model assessment, we have to know the difference between model selection and model assessment:
+\begin{itemize}
+	\item Model selection: estimating the performance of different models in order to choose the best one. 
+	\item Model assessment: having chosen a final model, estimating its prediction error (generalization error) on \underline{new data}. 
+\end{itemize}
+
+The training set is used to fit the models; the validation set is used to estimate prediction error for model selection; the test set is used for assessment of the generalization error of the final chosen model. Ideally, the test set should be kept in a ``valut'', and be brought out only at the end of the data analysis. 
+
+\subsection{The Bias-Variance Decomposition}
+
+Andrew Ng states that almost every good machine learning practitioner has a very sophisticated view on understanding of bias-variance decomposition. Hence, it is very importance to know what kind of factors will affect the bias-variance trade-off. 
+
+
+Now, if we assume that $Y = f(X) + \epsilon$ where $E(\epsilon) = 0$ and $\text{Var}(\epsilon) = \sigma_{\epsilon}^2$, we can derive an expression for the expected prediction error of a regression fit $\hat{f}(X)$ at an input point $X = x_0$, using squared-error loss: 
+\begin{align*}
+	\text{Err}(x_0) & = E[(Y - \hat{f}(x_0))^2 | X = x_0] \\
+	& = \sigma_{\epsilon}^2 + [ E \hat{f}(x_0) - f(x_0)]^2 + E[\hat{f}(x_0) - E \hat{f}(x_0)]^2 \\
+	& = \sigma_{\epsilon}^2 + \text{Bias}^2(\hat{f}(x_0)) + \text{Var}(\hat{f}(x_0)) \\
+	& = \text{Irreducible Error} + \text{Bias}^2 + \text{Variance} 
+\end{align*}
+
+The first term is the variance of the target around its true mean $f(x_0)$ and cannot be avoided no matter how well we estimate $f(x_0)$, unless $\sigma_{\epsilon}^2 = 0$. The second term is the squared bias, the amount by which the average of our estimate differs from the true mean; the last term is the variance; the expected squared deviation of $\hat{f}(x_0)$ around its mean. \textit{Typically the more complex we make the model $\hat{f}$, the lower the (squared) bias but the higher the variance}. 
+
+When we had higher variance, we say our model is over-fitting, and when we had higher bias, we say our model is under-fitting. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lc}
+	\hline 
+		Problem & Recipe \\
+		\hline 
+		High bias & big neural network model, or more complex model \\
+		High variance & more data, regulation \\
+		\hline 
+	\end{tabular}
+\end{table}
+
+One should realize that sometimes it is difficult to reduce bias and variance at the same time. In the era of big data, the bias-variance trade-off can be tackled in some sense when you got both complex neural network model and big dataset. 
+
+
+\subsection{Regularization}
+
+The purpose of doing regularization is mainly to reduce the variance. Generally, we have L1 and L2 regularization. Taking regression models as examples, with L2 regularization, we have the following cost function:
+\begin{align*}
+	\sum_{i=1}^n (y_i - \sum_{j=1}^p x_{ij} \beta_j)^2 + \lambda \sum_{j=1}^p \beta_j^2 
+\end{align*} 
+
+With L1 regularization, the Lasso regression add s the absolute value of magnitude of coefficient as penalty term to the loss function:
+\begin{align*}
+	\sum_{i=1}^n (yi - \sum_{j=1}^p x_{ij} \beta_j)^2 + \lambda \sum_{j=1}^p |\beta_j|
+\end{align*}
+
+In neural network model, the formulas of cost function have to adjusted based on the above regularization. One thing I have to mention is that one should realize that when you change the cost function, the formulas for doing gradient descent will also change. 
+
+There is another way for doing regularization, which avoids the optimization process through the cost function. It is called dropout regularization. You can read more on this method of regularization in this \href{https://cs231n.github.io/neural-networks-2/}{website}. By the way, dropout regularization is very frequently used by ML practitioners as it is more efficient. 
+
+There are other techniques that can help us to get the same effects of regularization, which include:
+\begin{itemize}
+	\item Data augmentation 
+	\item Early stopping of iteration (no over-fitting)
+\end{itemize}
+
+
+%%%------------------------Table of contents----------------------%%%
+% you don't need to change anything for this part
+\newpage
+\pagenumbering{roman}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\listoffigures
+\listoftables
+%%%---------------------------End of TOC--------------------------%%%
+
+
+
+%%%-----------------MAIN BODY: now, you can enjoy your writing--------------%%%
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section{Introduction}
+
+This LaTex template is for students who are taking courses from \textit{Chair
+for the Study of Economic Institutions, Innovation, and East Asian Development}
+at Goethe University in Frankfurt. The Top and bottom margins are one inch. The left
+margin is 3cm, and the right is 4cm. It uses Times New Roman font and 12pt size.
+The text is justified with 1.5 line spacing. 
+
+The main advantage of using LaTex is the efficiency of citation. When you write
+any academic paper, you need to cite sources properly. In \texttt{WORD}, you have
+to copy the right references in the right format and organize them in alphabetical
+order. With LaTex, all you need to do is to type:
+\begin{lstlisting}
+    \cite{}  % gives inline citation
+    \citep{} % gives Parenthetical citation
+\end{lstlisting}
+
+The above code would generate the citation and reference entry for you automatically.
+For instance, according to \cite{christensen2013disruptive} disruptive innovation
+refers to innovations and technologies that make expensive or sophisticated 
+products and services accessible and more affordable to a broader market \citep{greenwade93}.
+
+Every time you cite, the reference will be added on the reference list.
+
+
+
+\section{Literature Review}
+
+I would like to write a literature review here. This is a citation example.
+
+Nothing is new.  It is just a tex compiler with different settings. 
+
+Hope you enjoy it. 
+
+
+\subsection{Nature of Innovation}
+
+\subsection{Innovation Strategies}
+
+\section{Data Description}
+
+\blindtext
+
+\section{Methodology}
+
+
+\section{Results and Discussion}
+
+\section{Conclusion}
+
+
+
+
+
+
+\newpage
+\bibliography{eco}
+\bibliographystyle{apalike}
+
+
+
+
+
+\end{document}

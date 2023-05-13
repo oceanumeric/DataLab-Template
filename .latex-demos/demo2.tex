@@ -1,0 +1,319 @@
+\documentclass[aspectratio=169, t]{beamer}
+% \geometry{paperwidth=170.67mm, paperheight=96mm}
+% \usepackage{enumitem}% http://ctan.org/pkg/enumitem
+\usepackage{lmodern}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{verbatim}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+
+\definecolor{scolor}{RGB}{178,34,34}
+\definecolor{autumnred}{RGB}{219, 83, 83}
+\setbeamerfont{section number projected}{%
+  family=\rmfamily,series=\bfseries,size=\normalsize}
+\setbeamercolor{section number projected}{bg=white,fg=scolor}
+
+\setbeamertemplate{section in toc}[ball]
+
+\setbeamercolor{item}{fg=scolor}
+
+\setbeamercolor{block title example}{use=example text,fg=white,bg=autumnred}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
+
+
+
+\newcommand\itemshape[1]{%
+  \setbeamertemplate{itemize item}[#1]%
+  \usebeamertemplate{itemize item}%
+}
+
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{theorems}[numbered] 
+
+
+\setbeamercolor{block title definition}{fg=blue,bg=blue!20!bg}
+\setbeamercolor{block body definition}{bg=block title.bg!30!bg}
+
+
+\BeforeBeginEnvironment{definition}{%
+    \setbeamercolor{block title}{fg=white,bg=red!70!black}
+    \setbeamercolor{block body}{fg=black, bg=red!30!white}
+}
+\AfterEndEnvironment{definition}{
+ \setbeamercolor{block title}{use=structure,fg=structure.fg,bg=structure.fg!20!bg}
+ \setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!50!bg, fg=black}
+}
+
+
+\apptocmd{\frame}{}{\justifying}{} % Allow optional arguments after frame.
+\setbeamertemplate{caption}[numbered]
+
+
+%Information to be included in the title page:
+\title[Workshop on AI Meets Econometrics]{Workshop on AI Meets Econometrics}
+\subtitle{From Machine Learning to Deep Learning}
+\author{Fei Wang}
+\institute[Goethe University Frankfurt]{Management and Microeconomics \\
+ Goethe Universität Frankfurt}
+\date{25 May 2022}
+
+
+
+\begin{document}
+\frame[noframenumbering]{\titlepage}
+
+\begin{frame}{Roadmap}
+    \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+
+\begin{frame}{}
+    \vspace{90pt}
+    \begin{center}
+        \huge INTRODUCTION 
+    \end{center}
+\end{frame}
+
+\begin{frame}{Introduction}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            The Big Picture
+            \includegraphics[width=0.8\textwidth]{images/ai.png}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \vspace{5mm} \\ 
+            How will we demystify machine learning and deep learning?
+            \begin{enumerate}
+                \item Review of BLUE 
+                \item Review of Causal Inference
+                \item From Econometrics to Machine Learning
+                \item From Machine Learning to Deep Learning
+                \item A Concrete Example: NLP
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+    \footnotesize{
+            \url{https://en.wikipedia.org/wiki/Deep_learning}
+            }
+\end{frame}
+
+
+\section{Review of BLUE}
+
+
+\begin{frame}{}
+    \vspace{90pt}
+    \begin{center}
+        \huge REVIEW OF BLUE
+    \end{center}
+\end{frame}
+
+\begin{frame}{Review of BLUE}
+    For the following multivariate linear regression model,
+    \begin{equation*}
+        \begin{bmatrix}
+            y_1 \\
+            y_2 \\
+            \vdots \\
+            y_t \\
+            \vdots  \\ 
+            y_N
+        \end{bmatrix} = \begin{bmatrix}
+            1 & x_{12} & \cdots & x_{1k} \\
+            1 & x_{22} & \cdots & x_{2k} \\
+            \vdots & \vdots & \vdots \\
+            1 & x_{t2} & \cdots & x_{tk} \\ 
+            \vdots & \vdots & \vdots \\
+            1 & x_{N2} & \cdots & x_{Nk} 
+        \end{bmatrix} \begin{bmatrix}
+            \beta_1 \\ 
+            \beta_2 \\
+            \vdots \\
+            \beta_t \\ 
+            \vdots \\
+            \beta_k
+        \end{bmatrix} + \begin{bmatrix}
+            u_1 \\
+            u_2 \\
+            \vdots \\
+            u_t \\
+            \vdots  \\ 
+            u_N
+        \end{bmatrix}
+    \end{equation*} 
+    or simply:
+    \begin{equation}
+        Y = X \beta + u 
+    \end{equation}
+    where, $Y$ is a $N \times 1$ vector, $X$ is a $N \times k$ matrix, and 
+    $\beta$ is a $k \times 1$ vector. 
+    With assumptions:
+    \begin{align*}
+        & E(u)  = 0 \ \ \ \ 
+        V(u)  = \sigma^2 I \\ 
+        & \text{X is fixed} \ \ \ \ 
+        \text{X  has full rank k (or $k < N$)} 
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter}
+    The model is built up for \textbf{population}:
+    \begin{equation*}
+        Y = X \beta + u 
+    \end{equation*}
+    For each \textbf{sample}, we use OLS method to estimate $\hat{\beta_1}, \cdots, \hat{\beta_k}$
+    that minimize the sum of \textbf{squared residuals}:
+    \begin{equation*}
+        S = \sum_{i=1}^N \hat{u_t}^2 = (Y-X\hat{\beta})'(Y-X\hat{\beta})
+    \end{equation*}
+    and yields the following estimator in matrix form:
+    \begin{equation}
+        \hat{\beta} = (X'X)^{-1}X'Y 
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter (1)}
+    OLS estimator $\hat{\beta}$ is the Best \textbf{Linear Unbiased} Estimator
+    because we assume $E(u) = 0$. With the following population model and estimator:
+    \begin{align*}
+        Y & = X\beta + u \\ 
+        \hat{\beta} & = (X'X)^{-1}X'Y = (X'X)^{-1} X'(X\beta + u) \\ 
+        \hat{\beta} & = \beta + u \\ 
+        \to E(\hat{\beta})       & = E(\beta + u) = E(\beta) + E(u)  \\
+        E(\hat{\beta})  & = \beta 
+    \end{align*}
+    The Gauss-Markov theorem also states that the variance of OLS estimator $\hat{\beta}$
+    has the \textbf{smallest variance}:
+    \begin{equation*}
+        V(\hat{\beta}) = \sigma^2(X'X)^{-1},
+    \end{equation*}
+    which make it become the \textbf{Best Linear Unbiased Estimator} (BLUE).
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter (2)}
+    We reviewed one assumption
+    The variance of $\hat{\beta}$ is:
+    \begin{equation*}
+        V(\hat{\beta}) = \sigma^2(X'X)^{-1},
+    \end{equation*}
+    However, $\sigma^{2}$ is unknown as it is assumed for the \textbf{population}
+    model. We have to \textbf{estimate} $\sigma^2$. By imposing the \textbf{second assumption}:
+    \begin{equation*}
+        V(u) = \sigma^2 I
+    \end{equation*}
+    we could have the following equation:
+    \begin{equation*}
+        E\Big( \frac{\hat{u}'\hat{u}}{N-k} \Big ) = \sigma^2 
+    \end{equation*}
+    Therefore, an \textbf{unbiased} estimator of $\sigma^2$ is provided by
+    \begin{equation*}
+        \hat{\sigma}^2 = \frac{\hat{u}'\hat{u}}{N-k} 
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter (3)}
+    Now, we check the third assumption: $X$ is fixed (or non-stochastic), which
+    could be interpreted as `distribution is fixed' rather than stochastic (for
+    example, a random walk). With this assumption, we could safely add one more
+    assumption:
+    \begin{equation*}
+        u \sim N(0, \sigma^2)
+    \end{equation*}
+    The above assumption \textbf{was not} included in the model that assumes:
+    \begin{enumerate}
+        \item $E(u) = 0$
+        \item $V(u) = \sigma^2 I$
+        \item X is fixed 
+        \item X has full rank (k < N)
+    \end{enumerate}
+    When $X$ is fixed and error term $u$ (for population model) follows the normal distribution
+    $$u \sim N(0, \sigma^2)$$, we could have: 
+    \begin{equation*}
+        \hat{\beta} \sim N(\beta, \sigma^2(X'X)^{-1})
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter (3)}
+    One more step! Now, we have the following distribution:
+    \begin{equation*}
+        \hat{\beta} \sim N(\beta, \sigma^2(X'X)^{-1})
+    \end{equation*}
+    However, we don't know $\sigma^2$. After replacing $\sigma^2$ with the
+    unbiased estimator $\hat{\sigma}^2$, it turned out that the hypothesis such as
+    $\beta_i = \beta_{i0}$ could be tested by comparing the test statistic:
+    \begin{equation*}
+        \frac{\hat{\beta}_i - \beta_{i0}}{\sqrt{\hat{\sigma}^2\alpha_{ii}}}
+    \end{equation*}
+    with \textbf{critical values} from the $t_{N-k}$ distribution, where $\alpha_{ii}$
+    is the $ii$'s element of $(X'X)^{-1}$. 
+\end{frame}
+
+\begin{frame}{Review of BLUE: Assumptions Matter (4)}
+    The final assumption: $X$ is full rank ($k < N$)
+    Try to solve the following different cases:
+    \begin{itemize}
+        \item $\beta_1 + 2\beta_2 = 3$, infinite solutions (k = 2, N = 1)
+        \item unique solutions ($k = 2, N = 2$, full rank) 
+        \begin{align*}
+            & \beta_1 + 2 \beta_2 = 3 \\
+            & \beta_1 - \beta_2 = 5
+        \end{align*}
+        \item unique solutions ($k < N$) too 
+        \begin{equation*}
+            \begin{bmatrix}
+                y_1 \\
+                y_2 \\
+                \vdots \\
+                y_N
+            \end{bmatrix} = \begin{bmatrix}
+                1 & x_{12} & \cdots & x_{1k} \\
+                1 & x_{22} & \cdots & x_{2k} \\
+                \vdots & \vdots & \vdots \\
+                1 & x_{N2} & \cdots & x_{Nk} 
+            \end{bmatrix} \begin{bmatrix}
+                \beta_1 \\ 
+                \beta_2 \\
+                \vdots \\
+                \beta_k
+            \end{bmatrix} + \begin{bmatrix}
+                u_1 \\
+                u_2 \\
+                \vdots  \\ 
+                u_N
+            \end{bmatrix}
+        \end{equation*}
+        \begin{equation*}
+            N \times 1 \ \ \ \ \ \ \ \ \ \ \ \ \ \ N \times k \ \ \ \  \ \ \ \ \ \ k \times 1 \ \ \ \ N \times 1 
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Review of BLUE: Summary}
+    \begin{itemize}
+        \item $E(u) = 0$ gives us Linear Unbiased Estimator
+        \item $V(u) = \sigma^2 I$ gives us BLUE
+        \item $V(u) = \sigma^2 I$ gives us $\hat{\sigma}^2$ too
+        \item X is fixed and $u \sim N(0, \sigma^2)$ enable us to do t-test
+        \item X is full rank makes sure that we could solve equations  
+    \end{itemize}
+    Why bother to do all those things? 
+    \begin{itemize}
+        \item collecting data is not easy (sample size is often small)
+        \item making inference on population needs the assumption of distribution 
+        \item having a framework of conducting hypothesis test
+        \item confidence in assumed distribution gives the confidence in inference
+        \begin{itemize}
+            \item it is often the case
+            \item Law of Large Numbers (LLN) and Central Limit Theorem (CLT) guarantees this 
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
