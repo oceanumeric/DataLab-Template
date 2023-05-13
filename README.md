@@ -29,7 +29,7 @@ This is a  :fire: __one-click__  :fire: solution to create a workspace with AI f
    - paste the following link to `Import profile` and click `Import`
 
    ```bash
-   /workspaces/DataLab-Template/DataLab.code-profile
+   https://gist.github.com/oceanumeric/3792a4162fff92b6c3749536919f5343
    ```
 
    Once imported, you should see the following profile:
