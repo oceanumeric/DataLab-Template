@@ -100,4 +100,5 @@
         "./themes/gradient.css",
         "./themes/beam.css"
     ],
+    "git.autofetch": true,
 }

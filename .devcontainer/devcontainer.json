@@ -120,5 +120,6 @@
     "James-Yu.latex-workshop",
     "zhuangtongfa.Material-theme",
     "	MS-vsliveshare.vsliveshare"
-  ]
+  ],
+  "git.autofetch": true,
 }
