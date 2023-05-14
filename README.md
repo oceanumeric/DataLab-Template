@@ -38,3 +38,5 @@ This is a  :fire: __one-click__  :fire: solution to create a workspace with AI f
 
 3. Watch this video to learn how to use this template more effectively in _5 minutes_:
 
+[Youtube Video](https://youtu.be/zc4JCyJL0_Q)
+
