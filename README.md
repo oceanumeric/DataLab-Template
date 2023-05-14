@@ -29,7 +29,7 @@ This is a  :fire: __one-click__  :fire: solution to create a workspace with AI f
    - paste the following link to `Import profile` and click `Import`
 
    ```bash
-   https://gist.github.com/oceanumeric/3792a4162fff92b6c3749536919f5343
+   https://gist.github.com/oceanumeric/fea3f2a9d7457b53b9346e4c0f8df4b0
    ```
 
    Once imported, you should see the following profile:
